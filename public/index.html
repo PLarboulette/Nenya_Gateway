@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="bundle.js"></script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io();
+
+    var user = {};
+    user.name = "Pierre";
+    socket.emit('create_user', user);
+    console.log("OK ");
+
+    socket.on('user_created', function(msg){
+        console.log(msg);
+
+    });
+
+    socket.on('1', function(msg){
+        console.log(msg);
+    });
+
+
+</script>
+
+
+
+<p>
+    Coucou, bienvenue ici et à toi
+</p>
+
+
+</body>
+</html>
