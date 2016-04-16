@@ -18,9 +18,17 @@ exports.USER_CREATED = 'user_created';
 exports.USER_UPDATED = 'user_updated';
 exports.USER_DELETED ='user_deleted';
 
-// Projects Exports
+// Projects exports
 exports.PROJECTS ='projects';
+exports.CREATE_PROJECT = 'create_project';
+exports.READ_USERS = 'read_users';
+exports.READ_USER = 'read_user';
+exports.UPDATE_PROJECT = 'update_project';
+exports.DELETE_PROJECT = 'delete_project';
 
+exports.PROJECT_CREATED = 'project_created';
+exports.PROJECT_UPDATED = 'project_updated';
+exports.PROJECT_DELETED = 'project_deleted';
 
 
 // Tasks Exports
