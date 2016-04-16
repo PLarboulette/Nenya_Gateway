@@ -14,16 +14,13 @@
     var user = {};
     user.name = "Pierre";
     socket.emit('create_user', user);
-    console.log("OK ");
 
     socket.on('user_created', function(msg){
         console.log(msg);
 
     });
 
-    socket.on('1', function(msg){
-        console.log(msg);
-    });
+
 
 
 </script>

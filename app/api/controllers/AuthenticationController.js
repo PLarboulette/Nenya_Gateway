@@ -12,8 +12,8 @@ exports.logout = _logout;
 
 
 // Private
-function _login(req, res, callback) {
-    AuthenticationService.login(req, res, callback);
+function _login(user, callback) {
+    AuthenticationService.login(user,callback);
 }
 
 function _logout(req, res, callback) {

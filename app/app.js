@@ -31,7 +31,7 @@ var router = require('./api/router/Router');
 app.use('/api', router);
 
 http.listen(app.get('port'), function(){
-    console.log('listening on *:3000');
+    console.log("INFO = [Listening on port 3000]");
     Events.setUpApi(io);
     HelperAMQP.start("localhost");
 
