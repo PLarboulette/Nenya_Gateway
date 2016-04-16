@@ -13,6 +13,7 @@
     "Redux"
   ],
   "author": "Pierre Larboulette",
+  "git" : "https://github.com/PLarboulette/Nenya_Gateway.git",
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.0.20",

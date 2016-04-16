@@ -1,4 +1,5 @@
 # Nenya_Gateway
-Frontal NodeJS pour mon architecture microservices
+NodeJS Gateway for microservices architecture 
 
-Come back on GitHUb 
+Written in NodeJS using Socket.io for real time functions.
+Connected to RabbitMQ message passing betwwen microservices. 
