@@ -30,5 +30,4 @@ exports.PROJECT_CREATED = 'project_created';
 exports.PROJECT_UPDATED = 'project_updated';
 exports.PROJECT_DELETED = 'project_deleted';
 
-
 // Tasks Exports
