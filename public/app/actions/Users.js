@@ -15,7 +15,6 @@ export var actions = {
     fetchPostsFailure : _fetchPostsFailure
 };
 
-
 export function _fetchUsers () {
     const request = axios({
         method: 'get',

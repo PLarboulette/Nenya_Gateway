@@ -15,10 +15,15 @@ exports.setUpApiUsers = _setUpApiUsers;
 
 function _setUpApiUsers (io, socket) {
 
+    // Publish message in queue and will be read by Users microservice and return the user created datas
     socket.on(Constants.CREATE_USER, function (user) {
         UsersController.createUser(user, function (err, user) {
             io.emit(Constants.USER_CREATED, user);
         });
     });
+
+
+
+
 
 }

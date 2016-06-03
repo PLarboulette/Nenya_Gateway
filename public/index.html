@@ -12,11 +12,14 @@
     var socket = io();
 
     var user = {};
-    user.name = "Pierre";
+    user.lastName = "Wayne";
+    user.firstName = "Bruce";
+
+
     socket.emit('create_user', user);
 
     socket.on('user_created', function(msg){
-        console.log(msg);
+        console.log('Retour WebSocket ' + msg);
 
     });
 
