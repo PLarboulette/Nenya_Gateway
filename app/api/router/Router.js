@@ -2,64 +2,76 @@
  * Created by pierre on 14/04/16.
  */
 
+'use strict';
+
 // Imports
-var router = require('express').Router();
+const RouterExpress = require('express').Router();
 var AuthenticationController = require("./../controllers/AuthenticationController");
 var UsersController = require("./../controllers/UsersController");
 
-// middleware specific to this router
-router.use(function timeLog(req, res, next) {
-    next();
-});
 
-// define the home page route
-router.get('/', function (req, res) {
-    res.send('Home page');
-});
+module.exports = class Router {
 
-// -------------------- LOGIN ----------------------
+    constructor () {
+        this.router = RouterExpress;
+        this.init();
+        this.loginRoutes();
+        this.usersRoutes();
 
-// Login
-router.post("/login", function (req, res) {
-    AuthenticationController.login(req, res, function (err, user) {
-        if (err) res.status(err.code).json(err.message);
-        if (user != null)  res.status(200).json(user);
-        else res.status(403).json("Incorrect login and/or password");
-    });
-});
+    }
+    
+    getRouter () {
+        return this.router; 
+    }
 
-// Logout
-router.get("/logout", function (req, res) {
-    // TODO
-});
+    init () {
+        this.router.use(function timeLog(req, res, next) {
+            next();
+        });
 
-// ------------------ USERS ------------------------
+        this.router.get('/', function (req, res) {
+            res.send('Home page');
+        });
+    }
 
-// get all the users
-router.get('/users', function (req, res) {
-    UsersController.readUsers(req, res, function (err, users) {
-        if (err) res.status(err.code).json(err.message);
-        res.status(200).json(users);
-    });
-});
+    loginRoutes() {
+        this.router.post("/login", function (req, res) {
+            AuthenticationController.login(req, res, function (err, user) {
+                if (err) res.status(err.code).json(err.message);
+                if (user != null)  res.status(200).json(user);
+                else res.status(403).json("Incorrect login and/or password");
+            });
+        });
 
-// Create new user
-router.post("/users", function (req, res) {
-    // TODO
-});
+        this.router.get("/logout", function (req, res) {
 
-// Update user
-router.post("/users/:id", function (req, res) {
-    // TODO
-});
+        });
+    }
 
-// Delete user
-router.delete("/users/:id", function (req, res) {
-    // TODO
-});
+    usersRoutes() {
+        // get all the users
+        this.router.get('/users', function (req, res) {
+            UsersController.getUsers(req, res, function (err, users) {
+                if (err) res.status(err.code).json(err.message);
+                res.status(200).json(users);
+            });
+        });
 
-// ------------------------------------------
+        // Create new user
+        this.router.post("/users", function (req, res) {
+            // TODO
+        });
+
+        // Update user
+        this.router.post("/users/:id", function (req, res) {
+            // TODO
+        });
+
+        // Delete user
+        this.router.delete("/users/:id", function (req, res) {
+            // TODO
+        });
+    }
+};
 
 
-
-module.exports = router;

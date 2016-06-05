@@ -1,41 +1,53 @@
 /**
- * Created by pierre on 14/04/16.
+ * Created by Pierre on 14/04/16.
  */
 
-// Imports modules
+'use strict';
+
 var express = require('express');
-var app = express();
-var http = require('http').Server(app);
+var appExpress = express();
+var http = require('http').Server(appExpress);
 var io = require('socket.io')(http);
+
+/*const express = require('express');
+const http = require('http');
+const socket = require('socket.io');*/
 
 var path = require('path');
 var favicon = require('serve-favicon');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 
-// Imports own files
-var Events = require("./api/socket/Events");
+const Router = require("./api/router/Router");
+const Helper = require ("./amqp/Helper");
+const Events = require  ("./api/socket/Events");
 
-// AMQP
-var HelperAMQP = require("./amqp/Helper");
+ class app {
 
-// all environments
-app.set('port', process.env.PORT || 3000);
-// app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(session({ resave: true, saveUninitialized: true, secret: 'unicorn' }));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname + '/../public'));
+    constructor () {
+        this.init();
+        this.launch();
+    }
 
-var router = require('./api/router/Router');
-app.use('/api', router);
+    init () {
+        appExpress.set('port', process.env.PORT || 3000);
+        // app.use(favicon(__dirname + '/public/favicon.ico'));
+        appExpress.use(session({ resave: true, saveUninitialized: true, secret: 'unicorn' }));
+        appExpress.use(bodyParser.json());
+        appExpress.use(bodyParser.urlencoded({ extended: true }));
+        appExpress.use(express.static(__dirname + '/../public'));
+        appExpress.use('/api',  new Router().getRouter());
 
-http.listen(app.get('port'), function(){
-    console.log("INFO = [Listening on port 3000]");
-    Events.setUpApi(io);
-    HelperAMQP.start("localhost");
+    }
 
-});
+    launch() {
+        http.listen(appExpress.get('port'), function(){
+            console.log("INFO = [Listening on port "+appExpress.get('port')+"]");
+            var helper = new Helper('localhost');
+            var events = new Events(helper);
+            events.setUpApi(io);
+        });
+    }
+}
 
-module.exports.app = app;
-
+new app();

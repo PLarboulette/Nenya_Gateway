@@ -1,35 +1,32 @@
 /**
- * Created by plarboul on 14/04/2016.
+ * Created by Pierre on 14/04/2016.
  */
 
-// Imports
-var UsersService = require("./../services/UsersService");
+'use strict';
 
-// Exports
-exports.createUser = _createUser;
-exports.readUsers = _getUsers;
-exports.readUser = _readUser;
-exports.updateUser = _updateUser;
-exports.deleteUser = _deleteUser;
+module.exports = class UsersController {
 
-// Private
+    constructor () {
 
-function _createUser(user, callback) {
-    UsersService.createUser( user, callback);
-}
+    }
 
-function _getUsers(req, res, callback) {
-    // TODO
-}
+    createUser(req, callback) {
+        // UsersService.createUser(user, callback);
+    }
 
-function _readUser(req, res, callback) {
-    // TODO
-}
+    updateUser(req, callback) {
+        // UsersService.updateUser(user, callback);
+    }
 
-function _updateUser(req, res, callback) {
-    // TODO
-}
+    deleteUser(req, callback) {
+        // UsersService.deleteUser(idUser, callback);
+    }
 
-function _deleteUser(req, res, callback) {
-    // TODO
-}
+    getUsers(req, callback) {
+        // UsersService.getUsers(req, callback);
+    }
+
+    getUser(req, callback) {
+        // UsersService.getUser(idUser, callback);
+    }
+};

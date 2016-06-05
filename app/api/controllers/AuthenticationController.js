@@ -1,21 +1,22 @@
 /**
- * Created by pierre on 15/04/16.
+ * Created by Pierre on 15/04/16.
  */
 
+'use strict';
 
-// Imports
-var AuthenticationService = require('./../services/AuthenticationService');
+module.exports = class AuthenticationController {
 
-// Exports
-exports.login = _login;
-exports.logout = _logout;
+    constructor () {
+
+    }
+
+    login(user, callback) {
+        // AuthenticationService.login(user,callback);
+    }
+
+    logout(req, res, callback) {
+        // TODO
+    }
+};
 
 
-// Private
-function _login(user, callback) {
-    AuthenticationService.login(user,callback);
-}
-
-function _logout(req, res, callback) {
-    // TODO
-}

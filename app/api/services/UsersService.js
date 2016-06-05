@@ -1,45 +1,92 @@
 /**
- * Created by plarboul on 14/04/2016.
+ * Created by Pierre on 14/04/2016.
  */
 
+'use strict';
+
+
 // Imports
-var Helper = require("./../../amqp/Helper");
 var Constants = require("./../../utils/Constants");
+const Helper = require("../../amqp/Helper");
 
-// Exports
-exports.createUser = _createUser;
-exports.readUsers = _readUsers;
-exports.readUser = _readUser;
-exports.updateUser = _updateUser;
-exports.deleteUser = _deleteUser;
+module.exports = class UserService {
 
-// Private
+    constructor(helper) {
+        this.sockets = [];
+        this.helper = helper;
+    }
 
-// Create new user
-function _createUser(user, callback) {
-    /*var user = {};
-    user.login = req.body.login;
-    user.password = req.body.password;
-    user.firstName = req.body.firstName;
-    user.lastName = req.body.lastName;
-    user.rank = req.body.rank;
-    user.register = req.body.register;*/
+    /**
+     * Register new socket
+     * @param socket = the new socket to register
+     */
+    register(socket) {
+        this.sockets.push(socket);
+    }
 
-    Helper.publish(JSON.stringify(user), Constants.USERS, Constants.CREATE_USER, callback);
-}
+    /**
+     * Create new user
+     * @param user = the new user to create
+     */
+     createUser(user) {
+        this.helper.publish(JSON.stringify(user), Constants.USERS, Constants.CREATE_USER, (err, user) => {
+            this.sockets.forEach((socket) => {
+                if (err) socket.emit(Constants.ERROR);
+                else socket.emit(Constants.USER_CREATED, user);
+            });
+        });
+    };
 
-function _readUsers(req, res, callback) {
-    // TODO
-}
 
-function _readUser(req, res, callback) {
-    // TODO
-}
+    /**
+     * Update an user with its new data
+     * @param user = the new data of the user
+     */
+    updateUser(user) {
+        this.helper.publish(JSON.stringify(user), Constants.USERS, Constants.UPDATE_USER,(err, user) => {
+            this.sockets.forEach((socket) => {
+                if (err) socket.emit(Constants.ERROR);
+                else socket.emit(Constants.USER_UPDATED, user);
+            });
+        });
+    }
 
-function _updateUser(req, res, callback) {
-    // TODO
-}
+    /**
+     * Delete an user
+     * @param idUser = the id of the use we want to delete
+     */
+    deleteUser(idUser) {
+        this.helper.publish(JSON.stringify(idUser), Constants.USERS, Constants.DELETE_USER, (err, idUser) => {
+            this.sockets.forEach((socket) => {
+                if (err) socket.emit(Constants.ERROR);
+                else socket.emit(Constants.USER_DELETED, idUser);
+            });
+        });
+    }
 
-function _deleteUser(req, res, callback) {
-    // TODO
-}
+    /**
+     * Get all the users in database
+     * @param filters = fields to filter the result
+     */
+    getUsers(filters) {
+        this.helper.publish(JSON.stringify(filters), Constants.USERS, Constants.GET_USERS,(err, users) => {
+            this.sockets.forEach((socket) => {
+                if (err) socket.emit(Constants.ERROR);
+                else socket.emit(Constants.USERS_RETURNED, users);
+            });
+        });
+    }
+
+    /**
+     * Get the user with the id taken in parameter
+     * @param idUser = the id of the user
+     */
+    getUser(idUser) {
+        this.helper.publish(JSON.stringify(idUser), Constants.USERS, Constants.GET_USER, (err, user) => {
+            this.sockets.forEach((socket) => {
+                if (err) socket.emit(Constants.ERROR);
+                else socket.emit(Constants.USER_RETURNED, user);
+            });
+        });
+    }
+};

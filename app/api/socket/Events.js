@@ -1,28 +1,33 @@
 /**
- * Created by pierre on 15/04/16.
+ * Created by Pierre on 15/04/16.
  */
 
+'use strict';
+
 // Imports
-var Constants = require("./../../utils/Constants");
-var UsersEvents = require('./UsersEvents');
-var AuthenticationEvents = require("./AuthenticationEvents");
+const Constants = require("./../../utils/Constants");
+const AuthenticationEvents = require ("./AuthenticationEvents");
+const UsersEvents = require("./UsersEvents");
 
 // Exports
-exports.setUpApi = _setUpApi;
 
-// Private
+module.exports = class Events {
 
-function _setUpApi (io) {
+    constructor (helper) {
+        this.helper = helper;
+        this.authenticationEvents = new AuthenticationEvents(this.helper);
+        this.userEvents = new UsersEvents(this.helper);
+    }
 
-    io.on('connection', function(socket){
-        console.log('INFO = [User connected to Websocket]');
+    setUpApi (io) {
+        io.on('connection', (socket) => {
+            console.log('INFO = [User connected to Websocket]');
 
-        // Set up api for authentication events
-        AuthenticationEvents.setUpApiAuthentication(io, socket);
+            // Set up api for authentication events
+            this.authenticationEvents.setUpApiAuthentication(socket);
 
-        // Set up the api for users events
-        UsersEvents.setUpApiUsers(io, socket);
-
-
-    });
-}
+            // Set up the api for users events
+            this.userEvents.setUpApiUsers(socket);
+        });
+    }
+};

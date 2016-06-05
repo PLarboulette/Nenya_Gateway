@@ -1,24 +1,25 @@
 /**
- * Created by pierre on 16/04/16.
+ * Created by Pierre on 16/04/16.
  */
+
+'use strict';
 
 // Imports
 var Constants = require('./../../utils/Constants');
-var AuthenticationController = require("./../controllers/AuthenticationController");
+const authenticationService = require ("../services/AuthenticationService");
 
-// Exports
-exports.setUpApiAuthentication = _setUpApiAuthentication;
-
-// Private
-
-function _setUpApiAuthentication (io, socket) {
-
-    // Let to login a user and return it To client to put it to list of connected accounts
-    socket.on(Constants.LOGIN, function (err, user) {
-        AuthenticationController.login(user, function (err, user) {
-            io.emit(Constants.LOGIN, user);
-        })
-    });
+module.exports = class AuthenticationEvents {
 
 
-}
+    constructor (helper) {
+        this.helper = helper;
+        this.authenticationService = new authenticationService(this.helper);
+    }
+
+    setUpApiAuthentication (socket) {
+        // Let to login a user and return it To client to put it to list of connected accounts
+        socket.on(Constants.LOGIN, (err, user) => {
+            this.authenticationService.login(user)
+        });
+    }
+};
