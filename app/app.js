@@ -4,19 +4,15 @@
 
 'use strict';
 
-var express = require('express');
-var appExpress = express();
-var http = require('http').Server(appExpress);
-var io = require('socket.io')(http);
+const express = require('express');
+const appExpress = express();
+const http = require('http').Server(appExpress);
+const io = require('socket.io')(http);
 
-/*const express = require('express');
-const http = require('http');
-const socket = require('socket.io');*/
-
-var path = require('path');
-var favicon = require('serve-favicon');
-var session = require('express-session');
-var bodyParser = require('body-parser');
+const path = require('path');
+const favicon = require('serve-favicon');
+const session = require('express-session');
+const bodyParser = require('body-parser');
 
 const Router = require("./api/router/Router");
 const Helper = require ("./amqp/Helper");
