@@ -31,6 +31,8 @@ exports.DELETE_PROJECT = 'delete_project';
 exports.PROJECT_CREATED = 'project_created';
 exports.PROJECT_UPDATED = 'project_updated';
 exports.PROJECT_DELETED = 'project_deleted';
+exports.PROJECTS_RETURNED = 'projects_returned';
+exports.PROJECT_RETURNED = 'project_returned';
 
 // Tasks Exports
 

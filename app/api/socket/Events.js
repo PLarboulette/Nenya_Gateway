@@ -8,6 +8,8 @@
 const Constants = require("./../../utils/Constants");
 const AuthenticationEvents = require ("./AuthenticationEvents");
 const UsersEvents = require("./UsersEvents");
+const ProjectsEvents = require("./ProjectsEvents");
+
 
 // Exports
 
@@ -17,6 +19,7 @@ module.exports = class Events {
         this.helper = helper;
         this.authenticationEvents = new AuthenticationEvents(this.helper);
         this.userEvents = new UsersEvents(this.helper);
+        this.projectEvents = new ProjectsEvents(this.helper);
     }
 
     setUpApi (io) {
@@ -28,6 +31,9 @@ module.exports = class Events {
 
             // Set up the api for users events
             this.userEvents.setUpApiUsers(socket);
+
+            // Set up api for projects events
+            this.projectEvents.setUpApiProjects(socket);
         });
     }
 };

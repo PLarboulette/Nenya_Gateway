@@ -4,7 +4,6 @@
 
 'use strict';
 
-
 // Imports
 var Constants = require("./../../utils/Constants");
 const Helper = require("../../amqp/Helper");
@@ -37,7 +36,6 @@ module.exports = class UserService {
         });
     };
 
-
     /**
      * Update an user with its new data
      * @param user = the new data of the user
@@ -53,7 +51,7 @@ module.exports = class UserService {
 
     /**
      * Delete an user
-     * @param idUser = the id of the use we want to delete
+     * @param idUser = the id of the user we want to delete
      */
     deleteUser(idUser) {
         this.helper.publish(JSON.stringify(idUser), Constants.USERS, Constants.DELETE_USER, (err, idUser) => {

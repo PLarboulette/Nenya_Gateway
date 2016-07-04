@@ -12,8 +12,14 @@
     var socket = io();
 
     var user = {};
-    user.lastName = "Wayne";
-    user.firstName = "Bruce";
+    /*user.lastName = "Wayne";
+    user.firstName = "Bruce";*/
+    /*user.name = 'Test';
+    user.author = 'Moi';
+    user.beginDate= 'Now';
+    user.endDate = 'Tomorrow';*/
+    user._id = '45c4613a-7ce9-491f-9782-4038f33c22da6';
+
 
 
     socket.emit('create_user', user);
